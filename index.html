@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Выбери своё студенчество!</title>
+  <style>
+    :root {
+      /* Светлая тема */
+      --bg-color: #f5f7fa;
+      --text-color: #333;
+      --container-bg: #fff;
+      --heading-color: #003f7f;
+      --subheading-color: #005a87;
+      --block-bg: #f0f8ff;
+      --block-border: #00a8e8;
+      --highlight-bg: #e6f7ff;
+      --highlight-color: #005a87;
+      --table-th-bg: #0077b6;
+      --table-th-color: #fff;
+      --table-td-bg: #f5fdff;
+      --tag-bg: #0077b6;
+      --tag-color: #fff;
+      --footer-color: #666;
+      --link-color: #0077b6;
+      --button-bg: #0077b6;
+      --button-color: #fff;
+    }
+
+    body.dark {
+      /* Тёмная тема */
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --container-bg: #1e1e1e;
+      --heading-color: #80d4ff;
+      --subheading-color: #4fc3f7;
+      --block-bg: #2a2a2a;
+      --block-border: #4fc3f7;
+      --highlight-bg: #004d66;
+      --highlight-color: #80eaff;
+      --table-th-bg: #003f7f;
+      --table-th-color: #fff;
+      --table-td-bg: #2a2a2a;
+      --tag-bg: #005a87;
+      --tag-color: #fff;
+      --footer-color: #aaa;
+      --link-color: #80d4ff;
+      --button-bg: #4fc3f7;
+      --button-color: #000;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: var(--container-bg);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      transition: background 0.3s;
+    }
+
+    h1, h2 {
+      color: var(--heading-color);
+      border-bottom: 3px solid var(--block-border);
+      padding-bottom: 8px;
+    }
+    h1 { text-align: center; font-size: 2em; }
+    h2 { margin-top: 30px; color: var(--subheading-color); }
+
+    .block {
+      background: var(--block-bg);
+      border-left: 5px solid var(--block-border);
+      padding: 16px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+      transition: background 0.3s;
+    }
+
+    .highlight {
+      background-color: var(--highlight-bg);
+      color: var(--highlight-color);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+    }
+    th, td {
+      padding: 14px;
+      text-align: left;
+      border: 1px solid var(--block-border);
+    }
+    th {
+      background-color: var(--table-th-bg);
+      color: var(--table-th-color);
+    }
+    td {
+      background-color: var(--table-td-bg);
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 500;
+      margin: 0 4px 4px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--footer-color);
+      font-size: 0.9em;
+      font-style: italic;
+      padding-top: 15px;
+      border-top: 1px dashed var(--block-border);
+    }
+
+    a { color: var(--link-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Кнопка темы */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      background: var(--button-bg);
+      color: var(--button-color);
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+
+    .container {
+      padding: 15px;
+      border-radius: 8px;
+    }
+
+    h1 {
+      font-size: 1.6em;
+    }
+
+    h2 {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    ul, ol {
+      padding-left: 16px; /* меньше отступы */
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    .block {
+      padding: 12px;
+      margin: 15px 0;
+    }
+
+    table {
+      font-size: 0.9em;
+    }
+
+    th, td {
+      padding: 8px;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.9em;
+      z-index: 1000;
+    }
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Кнопка смены темы -->
+  <button class="theme-toggle">🌙 Тёмная тема</button>
+
+  <div class="container">
+
+    <h1>🎓 Выбери своё студенчество!</h1>
+    <p style="text-align: center; font-size: 1.2em; color: #555;">
+      <strong>Гайд по студенческим объединениям ПММ ВГУ</strong>
+    </p>
+
+    <!-- Студсовет -->
+    <h2>💬 Студсовет ПММ</h2>
+    <p><span class="tag">Организация</span> <span class="tag">Медиа</span> <span class="tag">Мероприятия</span></p>
+    <p><strong>Идеи, медиа, мероприятия и порядок на факультете.</strong></p>
+
+    <div class="block">
+      <p><strong>Направления:</strong></p>
+      <ul>
+        <li><strong>Мероприятия:</strong> квизы, настолки, посиделки, встречи</li>
+        <li><strong>СМИ / Медиа:</strong> ведём соцсети, публикуем фото, снимаем подкасты</li>
+        <li><strong>Волонтерство:</strong> волонтёрим на РИФе, Цифроземье, Днях открытых дверей и др.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <p><strong>Ещё:</strong></p>
+      <ul>
+        <li>Участвуем в <strong>сходках перваков</strong> вместе с Активом</li>
+        <li>Работаем на благо факультета и студентов</li>
+      </ul>
+    </div>
+
+    <p><strong>📌 Загруженность:</strong></p>
+    <ul>
+      <li>🕐 1 мероприятие в месяц (или меньше)</li>
+      <li>📆 Бывает тихо — месяцами без активности</li>
+      <li>🎯 Можно выбрать своё направление и не перегружаться</li>
+    </ul>
+
+    <!-- Профком -->
+    <h2>🛠 Профком</h2>
+    <p><span class="tag">Помогаем</span> <span class="tag">Информируем</span> <span class="tag">Поддерживаем</span> <span class="tag">Бюджет</span></p>
+    <p><strong>Заботимся о студентах — от стипендий до выдач.</strong></p>
+
+    <div class="block">
+      <p><strong>Чем занимаются:</strong></p>
+      <ul>
+        <li>Участвуешь в собраниях профоргов (раз в месяц)</li>
+        <li>Следишь за своей группой: информируешь о стипендиях, выдачах, помощи</li>
+        <li>Помогаешь собирать документы на матпомощь и соцстипендию и т.п.</li>
+        <li>Участвуешь в раздачах (кино, боулинг и др.)</li>
+        <li>На старших курсах — можешь войти в <span class="highlight">стипендиальную комиссию</span></li>
+        <li>Есть шанс попасть на <span class="highlight">школу актива профкома</span></li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <p><strong>Ещё:</strong></p>
+      <ul>
+        <li><strong>Подарочки</strong> от факультета на новый год </li>
+      </ul>
+    </div>
+
+    <p><strong>📌 Загруженность:</strong></p>
+    <ul>
+      <li>✅ Собрание 1 раз в месяц</li>
+      <li>✅ Рассылка в чат — ~1 раз в неделю</li>
+      <li>✅ Участие в выдачах — по назначению</li>
+    </ul>
+
+    <!-- Актив -->
+    <h2>🎭 Актив ПММ</h2>
+    <p><span class="tag">Творчество</span> <span class="tag">Сцена</span> <span class="tag">Самореализация</span> <span class="tag">Посвяты</span> </p>
+    <p><strong>Творим, играем, рвём сцены и посвяты!</strong></p>
+
+    <div class="block">
+      <p><strong>Направления:</strong></p>
+        <ul>
+          <li><strong>Актёрка:</strong> играешь роль как в театре</li>
+            <ul>
+              <li><i>Конфер:</i> пишешь сценарий, после выбора определенного помогаешь дописывать</li>
+            </ul>
+          <li><strong>Оригинальный жанр:</strong> пластический театр(не танцы), пантомима, цирк, бармен-шоу, театр теней или синтез-номер (смешение жанров)</li>
+          <li><strong>Танцевальный:</strong> танцуешь</li>
+          <li><strong>Музыкальный:</strong> играешь на инструментах или поёшь</li>
+          <li><strong>Медиа:</strong> снимаешь, монтируешь, участвуешь в видео, озвучиваешь</li>
+          <li><strong>Декораторы / Строители:</strong> одно направление, но разные задачи — одни оформляют, другие строят все для концерта</li>
+          <li><strong>И многое другое...</strong></li>
+        </ul>
+    </div>
+
+    <div class="block">
+      <p><strong>Ещё:</strong></p>
+      <ul>
+        <li>Готовим <strong>Новый год ПММ</strong> — один из главных вечеров года!</li>
+        <li>Организуем <strong>сходки перваков</strong> и <strong>посвяты</strong></li>
+        <li>Организуем <span class="highlight">AMM Friends Party</span></li>
+        <li>Лучшие получают путёвку на <span class="highlight">школу актива</span></li>
+        <li>Если номер выиграл <span class="highlight">Студвесну</span> среди факультетов ВГУ, можно поехать на Областную и, победив, потом Всероссийскую!</li>
+      </ul>
+    </div>
+
+    <p><strong>📌 Загруженность:</strong></p>
+    <ul>
+      <li>🔥 До концерта — полное погружение: дневные и ночные репетиции, прогоны, постановки</li>
+      <li>🍻 После — отдых и чилл до следующего сезона</li>
+    </ul>
+
+    <!-- Хищные Бобры -->
+    <h2>🏆 Хищные Бобры</h2>
+    <p><span class="tag">Спорт</span> <span class="tag">Выезды</span> <span class="tag">Флешмобы</span></p>
+    <p><strong>Спорт, игры, выезды — за честь ВГУ!</strong></p>
+
+    <div class="block">
+      <p><strong>Чем занимаемся:</strong></p>
+      <ul>
+        <li><strong>Медиа:</strong> снимаем фото/видео, монтируем ролики, посты, рислы</li>
+        <ul>
+          <li>вы выбираете до 2-3 видов спортов, которые хотите курировать</li>
+          <li>или не причастным к конкретному спорту и просто прикрепленны к главной группе и занимаетесь её продвижением и улучшением</li>
+        </ul>
+        <li><strong>Мероприятия:</strong> турниры по киберспорту, волейболу, теннису и др. видам спорта и не только турниры</li>
+        <li><strong>Выезды:</strong> участвуем в межвузовских соревнованиях (футбол, ГТО, шахматы и др.)</li>
+        <li><strong>Флешмобы:</strong> зарядки, видео с ректором, и др (можно посмотреть на стене сообщества вк)</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <p><strong>Особенности:</strong></p>
+      <ul>
+        <li>Это студенческий клуб <strong>всего ВГУ</strong>, а не только ПММ</li>
+        <li>Защищаем честь вуза и продвигаем студенческую жизнь</li>
+        <li>Есть фетивали, на которые ездим и это возможность покататься по стране бесплатно!</li>
+      </ul>
+    </div>
+
+    <p><strong>📌 Загруженность:</strong></p>
+    <ul>
+      <li>⚡ Может быть тишина на месяцы</li>
+      <li>⚡ А может быть выезд на 2–3 недели подряд</li>
+      <li>💡 Можно быть просто фотографом — 1 раз в месяц</li>
+    </ul>
+
+    <!-- Таблица выбора -->
+    <h2>✅ Как выбрать?</h2>
+    <table>
+      <tr>
+        <th>Ты хочешь...</th>
+        <th>Выбери...</th>
+      </tr>
+      <tr>
+        <td>Организовывать, общаться, вести соцсети</td>
+        <td><strong>Студсовет</strong></td>
+      </tr>
+      <tr>
+        <td>Помогать студентам и быть в курсе всех выплат</td>
+        <td><strong>Профком</strong></td>
+      </tr>
+      <tr>
+        <td>Играть, творить, быть на сцене</td>
+        <td><strong>Актив</strong></td>
+      </tr>
+      <tr>
+        <td>Заниматься спортом, выезжать, снимать видео</td>
+        <td><strong>Хищные Бобры</strong></td>
+      </tr>
+    </table>
+
+    <!-- Контакты -->
+    <h2>📍 Где нас найти?</h2>
+    <p>
+      🔹 <a href="https://vk.com/studcouncilamm">Студенческий совет ПММ</a><br>
+      🔹 <a href="https://vk.com/bobry_vsu">Хищные бобры</a><br>
+      🔹 <a href="https://vk.com/profcom_vsu">Профком ВГУ</a><br>
+      🔹 <a href="https://vk.com/vsu_active">Актив ВГУ</a><br>
+      🔹 <a href="https://vk.com/amm_fp">AMM FRIENDS PARTY</a><br>
+      🔹 <a href="https://vk.com/amm_vsu">Факультет ПММ</a><br>
+      🔹 <a href="https://vk.com/vsumain">ВГУ</a><br>
+    </p>
+
+    <p style="text-align: center; font-size: 1.1em; margin-top: 30px;">
+      <strong>💬 Попробуй — не понравится? Просто выйдешь.<br>
+      А вдруг найдёшь свою компанию?</strong>
+    </p>
+
+    <footer>
+      &copy; Буклет подготовлен студентами ПММ ВГУ • 2025 год
+    </footer>
+
+  </div>
+
+  <script>
+    const btn = document.querySelector('.theme-toggle');
+    const body = document.body;
+    btn.textContent = '🌞 Светлая тема';
+
+    btn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      if (body.classList.contains('dark')) {
+        btn.textContent = '🌙 Тёмная тема';
+      } else {
+        btn.textContent = '🌞 Светлая тема';
+      }
+    });
+  </script>
+
+</body>
+</html>
