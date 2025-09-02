@@ -401,17 +401,18 @@
   <script>
     const btn = document.querySelector('.theme-toggle');
     const body = document.body;
-    btn.textContent = '🌞 Светлая тема';
+    btn.textContent = '🌙 Тёмная тема';
 
     btn.addEventListener('click', () => {
       body.classList.toggle('dark');
       if (body.classList.contains('dark')) {
-        btn.textContent = '🌙 Тёмная тема';
-      } else {
         btn.textContent = '🌞 Светлая тема';
+      } else {
+        btn.textContent = '🌙 Тёмная тема';
       }
     });
   </script>
 
 </body>
 </html>
+
